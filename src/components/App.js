@@ -12,7 +12,7 @@ class App extends React.Component {
       isEditProfilePopupOpen: false,
       isAddPlacePopupOpen: false,
       isEditAvatarPopupOpen: false,
-      selectedCard: false
+      selectedCard: null
     }
   }
   render() {
@@ -32,28 +32,28 @@ class App extends React.Component {
             <span className="popup__error title-input-error"></span>
             <input type="text" id="description-input" className="popup__field popup__field_type_desc" placeholder="Введите описание" required minLength="2" maxLength="200" name="about" />
             <span className="popup__error description-input-error"></span>
-            <button type="submit" className="popup__submit">Сохранить</button>
           </>
-        } isOpen={this.state.isEditProfilePopupOpen ? "popup_opened" : ""} 
-        onClose={this.closeAllPopups.bind(this)} />
+        } isOpen={this.state.isEditProfilePopupOpen}
+        onClose={this.closeAllPopups.bind(this)}
+        buttonText='Сохранить' />
         <PopupWithForm title="Новое место" name="add" children={
           <>
             <input type="text" id="name-input" className="popup__field" placeholder="Название" required minLength="2" maxLength="30" name="name" />
             <span className="popup__error name-input-error"></span>
             <input type="url" id="link-input" className="popup__field" placeholder="Ссылка на картинку" required name="link" />
             <span className="popup__error link-input-error"></span>
-            <button type="submit" className="popup__submit">Создать</button>
           </>
-        } isOpen={this.state.isAddPlacePopupOpen ? "popup_opened" : ""} 
-        onClose={this.closeAllPopups.bind(this)} />
+        } isOpen={this.state.isAddPlacePopupOpen} 
+        onClose={this.closeAllPopups.bind(this)}
+        buttonText='Создать' />
         <PopupWithForm title="Обновить аватар" name="edit-avatar" children={
           <>
             <input type="url" id="avatar-input" className="popup__field" placeholder="Ссылка на картинку" required name="edit" />
             <span className="popup__error avatar-input-error"></span>
-            <button type="submit" className="popup__submit">Сохранить</button>
           </>
-        } isOpen={this.state.isEditAvatarPopupOpen ? "popup_opened" : ""} 
-        onClose={this.closeAllPopups.bind(this)} />
+        } isOpen={this.state.isEditAvatarPopupOpen} 
+        onClose={this.closeAllPopups.bind(this)}
+        buttonText='Сохранить' />
         <PopupWithForm title="Вы уверены?" name="delete" children={
           <>
             <h2 className="popup__title">Вы уверены?</h2>
@@ -81,7 +81,7 @@ class App extends React.Component {
       isEditProfilePopupOpen: false,
       isAddPlacePopupOpen: false,
       isEditAvatarPopupOpen: false,
-      selectedCard: false
+      selectedCard: null
     });
   }
 }
