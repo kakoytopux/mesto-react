@@ -9,7 +9,7 @@ class PopupWithForm extends React.Component {
           <h2 className="popup__title">{this.props.title}</h2>
           <form className="form" name={`${this.props.name}`} noValidate>
             {this.props.children}
-            <button type="submit" className="popup__submit">{this.props.buttonText}</button>
+            <button type="submit" className={`popup__submit ${this.props.buttonSelector ? "popup__submit_type_delete" : ""}`}>{this.props.buttonText}</button>
           </form>
         </div>
       </div>

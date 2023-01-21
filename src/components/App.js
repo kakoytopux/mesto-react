@@ -51,15 +51,10 @@ class App extends React.Component {
             <input type="url" id="avatar-input" className="popup__field" placeholder="Ссылка на картинку" required name="edit" />
             <span className="popup__error avatar-input-error"></span>
           </>
-        } isOpen={this.state.isEditAvatarPopupOpen} 
+        } isOpen={this.state.isEditAvatarPopupOpen}
         onClose={this.closeAllPopups.bind(this)}
         buttonText='Сохранить' />
-        <PopupWithForm title="Вы уверены?" name="delete" children={
-          <>
-            <h2 className="popup__title">Вы уверены?</h2>
-            <button type="button" className="popup__submit popup__submit_type_delete">Да</button>
-          </>
-        } />
+        <PopupWithForm title="Вы уверены?" name="delete" buttonText='Да' buttonSelector={true} />
         <ImagePopup card={this.state.selectedCard} onClose={this.closeAllPopups.bind(this)} />
       </>
     );
