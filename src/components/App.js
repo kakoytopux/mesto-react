@@ -54,7 +54,7 @@ class App extends React.Component {
         } isOpen={this.state.isEditAvatarPopupOpen}
         onClose={this.closeAllPopups.bind(this)}
         buttonText='Сохранить' />
-        <PopupWithForm title="Вы уверены?" name="delete" buttonText='Да' buttonSelector={true} />
+        <PopupWithForm title="Вы уверены?" name="delete" buttonText='Да' buttonSelector="popup__submit_type_delete" />
         <ImagePopup card={this.state.selectedCard} onClose={this.closeAllPopups.bind(this)} />
       </>
     );
