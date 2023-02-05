@@ -1,28 +1,30 @@
 import React from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-class Card extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-  render() {
-    return (
-      <article className="card">
-        <img src={this.props.card.link} alt={this.props.card.name} className="card__image" onClick={this.handleClick} />
-        <button type="button" className="card__delete button-hover" title="Удалить"></button>
-        <div className="card__block">
-          <h2 className="card__title">{this.props.card.name}</h2>
-          <div className="card__like-container">
-            <button type="button" className="card__like" title="Нравится"></button>
-            <p className="card__like-quantity">{this.props.card.likes.length}</p>
-          </div>
+export default function Card(props) {
+  const currentUser = React.useContext(CurrentUserContext);
+  const ownCard = currentUser._id === props.card.owner._id;
+  const isLiked = props.card.likes.some(i => i._id === currentUser._id);
+  return (
+    <article className="card">
+      <img src={props.card.link} alt={props.card.name} className="card__image" onClick={handleClick} />
+      {ownCard && <button type="button" className="card__delete button-hover" title="Удалить" onClick={handleDeleteClick}></button>}
+      <div className="card__block">
+        <h2 className="card__title">{props.card.name}</h2>
+        <div className="card__like-container">
+          <button type="button" className={`card__like ${isLiked && 'card__like_active'}`} title="Нравится" onClick={handleLikeClick}></button>
+          <p className="card__like-quantity">{props.card.likes.length}</p>
         </div>
-      </article>
-    );
+      </div>
+    </article>
+  );
+  function handleClick() {
+    props.onCardClick(props.card);
   }
-  handleClick() {
-    this.props.onCardClick(this.props.card);
+  function handleLikeClick() {
+    props.onCardLike(props.card);
+  }
+  function handleDeleteClick() {
+    props.onCardDelete(props.card);
   }
 }
-
-export default Card;
