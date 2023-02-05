@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useRef} from "react";
 import PopupWithForm from "./PopupWithForm";
 
 export default function AddPlacePopup(props) {
-  const fieldCardNameRef = React.useRef();
-  const fieldCardLinkRef = React.useRef();
+  const fieldCardNameRef = useRef();
+  const fieldCardLinkRef = useRef();
   function handleSubmit(evt) {
     evt.preventDefault();
 

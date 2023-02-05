@@ -18,7 +18,7 @@ class App extends React.Component {
       isAddPlacePopupOpen: false,
       isEditAvatarPopupOpen: false,
       selectedCard: null,
-      currentUser: '',
+      currentUser: {},
       cards: []
     }
     this.closeAllPopups = this.closeAllPopups.bind(this);
@@ -28,7 +28,6 @@ class App extends React.Component {
   }
   render() {
     return (
-      <>
       <CurrentUserContext.Provider value={this.state.currentUser}>
         <Header />
         <Main
@@ -47,7 +46,6 @@ class App extends React.Component {
         <PopupWithForm title="Вы уверены?" name="delete" buttonText='Да' buttonSelector="popup__submit_type_delete" />
         <ImagePopup card={this.state.selectedCard} onClose={this.closeAllPopups} />
       </CurrentUserContext.Provider>
-      </>
     );
   }
   handleEditProfileClick() {
@@ -102,20 +100,30 @@ class App extends React.Component {
   }
   handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === this.state.currentUser._id);
-    
-    Api.likeCard(card._id, !isLiked)
-    .then(res => {
+    this.requestLike = res => {
       this.setState({
         cards: this.state.cards.map(item => item._id === card._id ? res : item)
       });
-    })
-    .catch(err => console.log(err))
+    }
+    if(!isLiked) {
+      Api.likeCard(card._id)
+      .then(res => {
+        this.requestLike(res);
+      })
+      .catch(err => console.log(err))
+    } else {
+      Api.deleteLikeCard(card._id)
+      .then(res => {
+        this.requestLike(res);
+      })
+      .catch(err => console.log(err))
+    }
   }
   handleCardDelete(card) {
     Api.deleteCard(card._id)
     .then(() => {
       this.setState({
-        cards: this.state.cards.filter(item => item !== card)
+        cards: this.state.cards.filter(item => item._id !== card._id)
       });
     })
     .catch(err => console.log(err))
@@ -125,10 +133,10 @@ class App extends React.Component {
       Api.infoProfile(),
       Api.getInitialCards()
     ])
-    .then(([user, card]) => {
+    .then(([user, cards]) => {
       this.setState({
         currentUser: user,
-        cards: card
+        cards: cards
       })
     })
     .catch(err => console.log(err))
